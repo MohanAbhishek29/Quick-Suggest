@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Definition | Quick-Suggest</title>
+    <link rel="stylesheet" href="style.css?v=4">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="def-page-body">
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo"><a href="index.html">Quick-Suggest<span class="dot"></span></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Search Again</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Definition Content -->
+    <main class="def-container">
+        <a href="index.html" class="back-link">&larr; Back to Search</a>
+
+        <header class="def-header">
+            <h1 id="def-title" class="loading-text">Loading...</h1>
+            <div class="def-meta">
+                <span class="badge">NOUN / TOPIC</span>
+                <span class="source-link">Source: Quick-Suggest Database</span>
+            </div>
+        </header>
+
+        <section class="def-content-box">
+            <p id="def-desc" class="def-text">Fetching data from C++ Server...</p>
+        </section>
+
+        <!-- Fun Fact / Related Section -->
+        <section class="related-section">
+            <h3><span class="icon">💡</span> Did You Know?</h3>
+            <p>The Search Engine uses a Trie Data Structure to find this result in O(L) time complexity, where L is the
+                length of the word!</p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Quick-Suggest Project.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple inline script to fetch definition on load
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const query = params.get('q');
+
+            if (!query) {
+                document.getElementById('def-title').innerText = "No Query Found";
+                document.getElementById('def-desc').innerText = "Please return to the home page and search for a term.";
+                return;
+            }
+
+            try {
+                // Fetch from C++ Backend
+                const response = await fetch(`http://localhost:8080/define?q=${query}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const data = await response.json();
+
+                if (data.type === "comparison") {
+                    // Render Comparison View
+                    const word1 = data.word1.charAt(0).toUpperCase() + data.word1.slice(1);
+                    const word2 = data.word2.charAt(0).toUpperCase() + data.word2.slice(1);
+
+                    document.getElementById('def-title').innerText = `${word1} vs ${word2}`;
+                    document.getElementById('def-title').classList.remove('loading-text');
+
+                    const desc1 = (data.desc1 && data.desc1 !== "Definition not found.") ? data.desc1 : `No definition found for ${word1}.`;
+                    const desc2 = (data.desc2 && data.desc2 !== "Definition not found.") ? data.desc2 : `No definition found for ${word2}.`;
+
+                    document.querySelector('.def-content-box').innerHTML = `
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+                            <div style="flex: 1; padding: 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px;">
+                                <h3 style="color: var(--primary); margin-bottom: 15px; font-size: 1.5rem;">${word1}</h3>
+                                ${desc1}
+                            </div>
+                            <div style="flex: 1; padding: 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px;">
+                                <h3 style="color: var(--accent); margin-bottom: 15px; font-size: 1.5rem;">${word2}</h3>
+                                ${desc2}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Render Single View
+                    const title = data.word.charAt(0).toUpperCase() + data.word.slice(1);
+                    document.getElementById('def-title').innerText = title;
+                    document.getElementById('def-title').classList.remove('loading-text');
+
+                    if (data.description && data.description !== "Definition not found.") {
+                        document.getElementById('def-desc').innerHTML = data.description;
+                    } else {
+                        document.getElementById('def-desc').innerHTML = `We couldn't find a definition for <strong>'${query}'</strong>.<br>Try searching for words like 'gravity', 'internet', or 'algorithm'.`;
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('def-title').innerText = "Error";
+                document.getElementById('def-desc').innerText = "Could not connect to the C++ Backend. Is the server running?";
+            }
+        });
+    </script>
+</body>
+
+</html>

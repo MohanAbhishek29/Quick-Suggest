@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick-Suggest | Advanced C++ Search Engine</title>
+    <link rel="stylesheet" href="style.css?v=4">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- FontAwesome Placeholder -->
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">Quick-Suggest<span class="dot"></span></div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#features">Technology</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#" class="btn-nav">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Lightning Fast Search <br> Powered by <span class="gradient-text">C++ & Tries</span>
+            </h1>
+            <p class="hero-subtitle">Experience lightning-fast O(L) time complexity with our advanced C++ prefix-trees.
+            </p>
+
+            <!-- Search Interface -->
+            <div class="search-wrapper-outer">
+                <div class="search-container">
+                    <div class="input-wrapper">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="search-bar"
+                            placeholder="Search CS Terms (e.g., 'algorithm', 'binary')..." autocomplete="off">
+                        <svg class="mic-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                    </div>
+                    <div id="suggestions-box" class="suggestions hidden"></div>
+                </div>
+
+                <!-- Result Card -->
+                <div id="results-container" class="results-container hidden">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span class="badge">DEFINITION</span>
+                            <div class="result-url">quick-suggest.ai/define/<span id="res-word-slug">keyword</span>
+                            </div>
+                        </div>
+                        <h3 id="res-word">Keyword</h3>
+                        <p id="res-desc">Description of the keyword goes here...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Background Animation Elements -->
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="section-header">
+            <h2>Core Technology</h2>
+            <p>Built with performance and scalability in mind.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon-box">⚡</div>
+                <h3>O(L) Complexity</h3>
+                <p>Search time depends only on the length of the word (L), not the dictionary size (N). Extremely fast.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-box">🧱</div>
+                <h3>Trie Data Structure</h3>
+                <p>Uses a Prefix Tree (Trie) to store thousands of words efficiently with shared prefixes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-box">⚙️</div>
+                <h3>C++ Backend</h3>
+                <p>Custom HTTP Server written in C++ using WinSock2 for low-level networking control.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Quick-Suggest Project. All rights reserved.</p>
+            <p class="crypto-text">Built for Advanced DSA Course.</p>
+        </div>
+    </footer>
+
+    <script src="script.js?v=4"></script>
+</body>
+
+</html>

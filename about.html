@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Project | Quick-Suggest</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="about-page-body">
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo"><a href="index.html">Quick-Suggest<span class="dot"></span></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- About Content -->
+    <main class="about-container">
+
+        <header class="about-header">
+            <h1>About The Project</h1>
+            <p class="subtitle">A High-Performance Autocomplete Engine demonstrating Advanced Data Structures.</p>
+        </header>
+
+        <section class="content-block">
+            <h2><span class="icon">🚀</span> Project Overview</h2>
+            <p>
+                <strong>Quick-Suggest</strong> is not just a simple dictionary; it is a demonstration of
+                <strong>algorithm optimization</strong> and <strong>low-level system programming</strong>.
+                Unlike standard web searches that rely on indexed databases (like SQL), this project implements a
+                custom <strong>Trie (Prefix Tree)</strong> data structure in C++ to achieve near-instantaneous search
+                results.
+            </p>
+        </section>
+
+        <section class="content-block">
+            <h2><span class="icon">🧱</span> The Trie Data Structure</h2>
+            <p>
+                At the core of this engine lies the <strong>Trie</strong>. A Trie is a tree-like data structure used for
+                storing strings.
+                Each node represents a character, and paths from the root to leaf nodes represent words.
+            </p>
+            <div class="code-snippet">
+                <pre>
+struct TrieNode {
+    unordered_map&lt;char, TrieNode*&gt; children;
+    bool isEndOfWord;
+    string description;
+};
+                </pre>
+            </div>
+            <p>
+                <strong>Why Trie?</strong> The time complexity for searching a word is <strong>O(L)</strong>, where L is
+                the length of the word.
+                This is significantly faster than O(N) linear search or O(log N) binary search on huge datasets.
+            </p>
+        </section>
+
+        <section class="content-block">
+            <h2><span class="icon">⚙️</span> C++ & Custom Server</h2>
+            <p>
+                The backend is built entirely in <strong>C++</strong> without using heavy frameworks like Node.js or
+                Python Flask.
+                It utilizes the <strong>WinSock2 API</strong> to manually handle HTTP requests.
+            </p>
+            <p>
+                <strong>How it works:</strong>
+            <ul>
+                <li>The server listens on Port 8080.</li>
+                <li>It intercepts raw TCP packets.</li>
+                <li>It parses the HTTP GET request string.</li>
+                <li>If the request is <code>/search?q=...</code>, it queries the Trie and constructs a JSON response.
+                </li>
+                <li>If the request is for an HTML file, it streams the file content back to the browser.</li>
+            </ul>
+            </p>
+        </section>
+
+        <section class="content-block">
+            <h2><span class="icon">📄</span> Dynamic File I/O</h2>
+            <p>
+                To avoid hardcoding, the system uses <strong>File I/O streams (`ifstream`)</strong> to load the dataset
+                dynamically.
+                Upon startup, the server reads <code>dataset.txt</code> line-by-line, populating the Trie in memory.
+                This makes the system extensible—simply adding a new line to the text file instantly updates the search
+                engine without recompilation.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Quick-Suggest Project. Developed for Advanced DSA Course.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

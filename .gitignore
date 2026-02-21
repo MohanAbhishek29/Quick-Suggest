@@ -1,0 +1,12 @@
+# Ignore compilation outputs
+*.exe
+*.o
+
+# Ignore log files
+*.log
+
+# Ignore IDE settings
+.vscode/
+
+# Ignore artifact directories
+.system_generated/
