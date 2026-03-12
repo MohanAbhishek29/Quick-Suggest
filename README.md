@@ -10,6 +10,7 @@
   <a href="#key-features">Key Features</a> •
   <a href="#architecture">Architecture</a> •
   <a href="#how-to-run">How to Run</a> •
+  <a href="#how-to-deploy">Deployment</a> •
   <a href="#nlp--comparisons">NLP Search</a>
 </p>
 
@@ -64,6 +65,12 @@ Because the HTTP server is built on WinSock2, it requires a Windows environment 
    ```
 4. **Search!**
    Open your browser and navigate to `http://localhost:8080/`.
+
+## 🌐 How To Deploy (Netlify / Static)
+
+To share this project online without running a C++ server on a cloud machine:
+1. Simply upload the contents of the `/dist` folder to **Netlify**, **Vercel**, or **GitHub Pages**.
+2. The project will automatically switch to the **JavaScript-powered Trie Engine** (`trie_engine.js`) if it detects the C++ server is offline, giving you the exact same features (Autocomplete, NLP, Comparison) directly in the browser!
 
 ## 🧠 Advanced NLP & Comparisons
 
