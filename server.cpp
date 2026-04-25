@@ -3,11 +3,23 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
+#ifdef _WIN32
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include "trie.h"
-
 #pragma comment(lib, "ws2_32.lib")
+#else
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <cstring>
+#define SOCKET int
+#define INVALID_SOCKET -1
+#define SOCKET_ERROR -1
+#define closesocket close
+#define WSACleanup()
+#endif
+#include "trie.h"
 
 using namespace std;
 
@@ -256,11 +268,13 @@ void handleClient(SOCKET clientSocket) {
 int main() {
     loadDictionary();
 
+#ifdef _WIN32
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         cerr << "WSAStartup failed" << endl;
         return 1;
     }
+#endif
 
     SOCKET serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == INVALID_SOCKET) {
@@ -292,7 +306,7 @@ int main() {
     cout << "Press Ctrl+C to stop..." << endl;
 
     while (true) {
-        SOCKET clientSocket = accept(serverSocket, NULL, NULL);
+        SOCKET clientSocket = accept(serverSocket, nullptr, nullptr);
         if (clientSocket == INVALID_SOCKET) {
             cerr << "Accept failed" << endl;
             continue;
