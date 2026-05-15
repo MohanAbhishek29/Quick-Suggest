@@ -1,17 +1,25 @@
 <h1 align="center">
   <br>
-  Quick-Suggest 🚀
+  🚀 Quick-Suggest
   <br>
 </h1>
 
-<h4 align="center">A Lightning-Fast C++ Powered Search Engine built with WinSock2 & Tries.</h4>
+<h4 align="center">A Lightning-Fast C++ Powered Search Engine built with Prefix Tries, Docker Microservices, and WinSock2/POSIX Sockets.</h4>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#architecture">Architecture</a> •
-  <a href="#how-to-run">How to Run</a> •
-  <a href="#how-to-deploy">Deployment</a> •
-  <a href="#nlp--comparisons">NLP Search</a>
+  <a href="#-core-technology">Core Technology</a> •
+  <a href="#-key-features">Key Features</a> •
+  <a href="#-architecture--microservices">Architecture</a> •
+  <a href="#-how-to-run-locally">How to Run</a> •
+  <a href="#-cloud-deployment">Deployment</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white" />
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
 </p>
 
 ![Screenshot of Quick-Suggest](https://raw.githubusercontent.com/MohanAbhishek29/Quick-Suggest/main/media.png)
@@ -20,68 +28,57 @@
 
 ## ⚡ Overview
 
-**Quick-Suggest** is not your average autocomplete bar. Built entirely from scratch for an Advanced Data Structures and Algorithms (DSA) project, it is a fully functioning network search engine. The backend is written entirely in **C++** using low-level socket programming (`WinSock2`), while the frontend is a modern, responsive Glassmorphism UI.
+**Quick-Suggest** is far more than a simple autocomplete bar. Originally built for an Advanced Data Structures and Algorithms (DSA) project, it has evolved into a highly scalable, containerized network search engine. 
 
-The core technology relies on a custom **Trie (Prefix Tree) Data Structure** to achieve massive scalability. Search complexity is strictly **O(L)** (where L is the length of the query), completely independent of the dataset size!
+The backend is written entirely from scratch in **C++** using cross-platform socket programming (`WinSock2` & `POSIX`). The frontend boasts a stunning, responsive **Glassmorphism UI** equipped with Voice Search and Natural Language Processing (NLP).
+
+## 🧠 Core Technology
+
+At the heart of the engine lies a custom **Trie (Prefix Tree) Data Structure**. 
+Unlike traditional databases that search in $O(N)$ or $O(\log N)$ time, this engine retrieves results in strict **$O(L)$ time complexity** (where $L$ is the length of your query), completely irrespective of the dataset size!
 
 ## ✨ Key Features
 
-- **Blazing Fast Autocomplete:** Powered by C++ Prefix Trees (Tries) for instant O(L) time complexity lookups.
-- **Custom HTTP Web Server:** No node.js or python backends here; the HTTP request parsing, routing, and CORS handling is written directly in C++ via the WinSock2 library.
-- **Dynamic NLP processing:** Stop words (e.g., "what is the meaning of...") are automatically stripped at the socket level.
-- **A/B Comparison Engine:** Searches like "Difference between Stack and Queue" trigger a dual-Trie lookup, returning a side-by-side comparative UI.
-- **Real-Time Voice Search:** Integrated with Browser Speech API to allow completely hands-free navigation.
-- **Rich Tech Dataset:** Over 300+ Computer Science, DSA, and Software Engineering definitions parsed locally into the Trie from `dataset.txt`.
+- 🏎️ **Blazing Fast Autocomplete:** Powered by C++ Prefix Trees for instantaneous keystroke-level responses.
+- 🌐 **Custom HTTP Web Server:** Zero backend frameworks (No Node.js/Python). HTTP parsing, routing, and CORS handling are written natively in C++.
+- 🗣️ **Real-Time Voice Search:** Integrated with the Web Speech API for a completely hands-free, sci-fi search experience.
+- 🤖 **Advanced NLP Engine:** Automatically strips conversational "stop words" (e.g., *"what is the meaning of..."*) at the socket level.
+- ⚖️ **A/B Comparison View:** Queries like *"Difference between Stack and Queue"* trigger a dual-Trie lookup, dynamically rendering a side-by-side comparison UI.
+- 🐳 **Dockerized Microservices:** Fully orchestrated with Docker Compose and an Nginx Load Balancer to achieve true horizontal scalability.
 
-## 🏗️ Architecture Stack
+## 🏗️ Architecture & Microservices
 
-### Backend (C++)
-* `server.cpp`: Manual TCP/IP socket binding, static file serving, and JSON API Endpoint (`/search` and `/define`).
-* `trie.h`: Core data structure for prefix storing and Depth-First-Search (DFS) retrieval.
+The project utilizes a scalable microservice architecture:
+1. **The Backend Nodes:** Three (3) identical instances of the C++ HTTP server running simultaneously inside lightweight Alpine Linux containers.
+2. **The Load Balancer:** An Nginx reverse proxy listening on port 80, distributing incoming traffic across the three C++ backends using a round-robin algorithm.
 
-### Frontend
-* Pure `HTML`, `Vanilla JS`, and `CSS`.
-* Features custom animations, fluid glassmorphism, dynamic DOM injection for dual-view comparisons, and LocalStorage for recent history.
+*For detailed microservice documentation, see [MICROSERVICES_DOCS.md](./MICROSERVICES_DOCS.md).*
 
-## 🚀 How To Run (Windows)
+## 🚀 How To Run Locally
 
-Because the HTTP server is built on WinSock2, it requires a Windows environment to run the backend natively.
+You can run this project either natively on Windows or via Docker.
 
-1. **Clone the repository:**
+### Option 1: Native Windows (MinGW)
+1. Double-click `build.bat` to compile `server.cpp` using WinSock2.
+2. Double-click `run.bat` to start the server.
+3. Open `http://localhost:8080/` in your browser.
+
+### Option 2: Docker Microservices (Any OS)
+1. Ensure you have Docker Desktop installed.
+2. Run the following command in your terminal:
    ```bash
-   git clone https://github.com/MohanAbhishek29/Quick-Suggest.git
-   cd Quick-Suggest
+   docker-compose up --build -d
    ```
-2. **Compile the C++ Server:**
-   Double-click the `build.bat` file, or run:
-   ```cmd
-   g++ -O3 -Wall server.cpp -o server.exe -lws2_32
-   ```
-   *(Ensure you have MinGW / GCC installed and added to your system PATH)*
-3. **Start the Engine:**
-   Double-click `run.bat`, or run:
-   ```cmd
-   .\server.exe
-   ```
-4. **Search!**
-   Open your browser and navigate to `http://localhost:8080/`.
+3. Open `http://localhost/` (Port 80) in your browser.
 
-## 🌐 How To Deploy (Netlify / Static)
+## ☁️ Cloud Deployment (Netlify)
 
-To share this project online without running a C++ server on a cloud machine:
-1. Simply upload the contents of the `/dist` folder to **Netlify**, **Vercel**, or **GitHub Pages**.
-2. The project will automatically switch to the **JavaScript-powered Trie Engine** (`trie_engine.js`) if it detects the C++ server is offline, giving you the exact same features (Autocomplete, NLP, Comparison) directly in the browser!
-
-## 🧠 Advanced NLP & Comparisons
-
-Try these exact queries in the search bar to see the NLP Engine in action:
-
-* `what is an algorithm` *(Auto-strips the stop words and searches "algorithm")*
-* `difference between stack and queue` *(Detects comparison intent and returns a split-screen view)*
-* `c++ vs java` *(Parses the "vs" operator and searches both independently)*
+To deploy this project globally without managing a cloud server, the frontend includes a static fallback engine!
+- Upload the contents of the `/dist` folder to **Netlify**, **Vercel**, or **GitHub Pages**.
+- The UI will automatically detect that the C++ server is offline and seamlessly switch to the standalone **JavaScript-powered Trie Engine** (`trie_engine.js`), providing the exact same experience directly in the browser!
 
 ---
 
 <p align="center">
-  <i>Built for Advanced DSA Module • 2026</i>
+  <i>Engineered for Advanced DSA & Scalable Systems Architecture • 2026</i>
 </p>
