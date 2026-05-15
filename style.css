@@ -478,7 +478,9 @@ footer {
     margin-bottom: 0.5rem;
     background: linear-gradient(to right, #fff, #aaa);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 .loading-text {
@@ -554,7 +556,9 @@ footer {
     margin-bottom: 1rem;
     background: var(--gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 .content-block {
