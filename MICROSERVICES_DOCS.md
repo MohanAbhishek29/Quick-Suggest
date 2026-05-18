@@ -1,4 +1,4 @@
-# Task 2: Scalable Microservice Architecture using Docker
+# Scalable Microservice Architecture using Docker
 
 This document explains the containerization and microservice architecture implemented for the **Quick-Suggest** C++ backend.
 
